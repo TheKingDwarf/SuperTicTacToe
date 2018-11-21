@@ -12,9 +12,5 @@ package supertictactoe;
 public interface ChangeBoard {
     
     public int checkWin();
-        
-    public void setBoard();
-    
-    public int[][] getBoard();
     
 }
