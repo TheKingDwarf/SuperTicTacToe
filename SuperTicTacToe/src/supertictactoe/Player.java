@@ -6,6 +6,10 @@
  * Took me x hours
  */
 
+//TO DO: use the check cell method to show error message
+//selectable image to place token 
+//blank is 0, player token is 1, computer token is 2
+
 //package
 package supertictactoe;
 
