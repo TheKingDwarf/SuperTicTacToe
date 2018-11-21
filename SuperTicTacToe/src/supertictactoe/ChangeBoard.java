@@ -11,6 +11,7 @@ package supertictactoe;
  */
 public interface ChangeBoard {
     
-    public int checkWin();
+    public boolean checkCell(int x, int y);
     
+    public void placeCell(int x, int y);
 }

@@ -15,7 +15,7 @@ public class Computer implements ChangeBoard {
     
     Board board = new Board();
     Board testBoard = new Board();
-    
+    private int[][] boardData;
     
     
     public Computer(Board board, int difficulty){
@@ -27,10 +27,23 @@ public class Computer implements ChangeBoard {
         
     }
     
-    public boolean checkCell(){
-        return false;
+    public boolean checkCell(int x, int y){
+        getBoard(); //make sure our board data is accurate
+
+        return boardData[x][y] == 0; //returns 1 or 0 based off what this statement evaluates to
         
     }
+    
+    public void placeCell(int x, int y) {
+        if(checkCell(x, y)) {
+            board.setBoard( x, y);
+        } 
+    }
+            
+    public void getBoard() {
+        this.boardData = board.getBoard();
+    }
+    
     
     
 }
