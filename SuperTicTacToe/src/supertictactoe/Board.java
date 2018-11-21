@@ -1,3 +1,10 @@
+/*
+ * Logan Forman and Travis Dutton-Leyda
+ * 11/20/2018
+ * This program is the super Tic Tac Toe experience. 
+ * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
+ * Took me x hours
+ */
 
 //package
 package supertictactoe;
@@ -10,7 +17,7 @@ public class Board {
     public void setBoard(int x, int y, int value){
         this.board[x][y] = value;       
     }
-    
+    //get board
     public int[][] getBoard(){
         return this.board;
         
@@ -18,7 +25,7 @@ public class Board {
     //checks from horizon, diag, and vert win
     public boolean checkWin(int[][] board, int t){
         return checkHorizontalWin(board, t) || checkVerticalWin(board, t) || checkDiagonalWin(board, t);        
-    }
+    }//end check win
     //checks horizontal win
     public boolean checkHorizontalWin(int[][] board, int t){
         for (int i = 0; i < board.length; i++) {
@@ -32,7 +39,7 @@ public class Board {
 			}
 			return false;
         
-    }
+    }//end check horizon
    
     //check win vertically
     public boolean checkVerticalWin(int[][] board, int t){
@@ -47,7 +54,7 @@ public class Board {
 			}
 			return false;
         
-    }
+    }//end check vert
      //checks diagonal win
     public boolean checkDiagonalWin(int[][] board, int t){
         int count = 0;
@@ -67,7 +74,7 @@ public class Board {
 			}
 			return false;
         
-    }
+    }//end check diagonal
     
     
 }//end class
