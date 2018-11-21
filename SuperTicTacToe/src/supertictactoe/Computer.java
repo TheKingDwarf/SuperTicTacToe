@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Logan Forman and Travis Dutton-Leyda
+ * 11/20/2018
+ * This program is the super Tic Tac Toe experience. 
+ * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
+ * Took me x hours
  */
 package supertictactoe;
 
@@ -27,7 +29,7 @@ public class Computer implements ChangeBoard {
     }
     
     public void turn(){
-        switch (difficulty) {
+        switch (difficulty) { //do different things based of difficulty setting
             case 0:
                 PlaceRandomCell(); //really easy
                 break;
@@ -42,9 +44,10 @@ public class Computer implements ChangeBoard {
     }
     
     public void PlaceRandomCell() {
-        Random rand = new Random();
-        cellPlaced = false;
-        while (cellPlaced = false) {
+        Random rand = new Random();//new random instance
+        cellPlaced = false; 
+        
+        while (cellPlaced = false) { //generate random positions until one works
             placeCell(rand.nextInt(2),rand.nextInt(2));
         }
     }
@@ -66,9 +69,9 @@ public class Computer implements ChangeBoard {
     
     @Override
     public void placeCell(int x, int y) {
-        if(checkCell(x, y)) {
-            board.setBoard( x, y, 2);
-            cellPlaced = true;
+        if(checkCell(x, y)) { //if cell is empty
+            board.setBoard( x, y, 2); //set the cell at the board
+            cellPlaced = true; //break out of loop
         } 
     }
             

@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Logan Forman and Travis Dutton-Leyda
+ * 11/20/2018
+ * This program is the super Tic Tac Toe experience. 
+ * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
+ * Took me x hours
  */
 package supertictactoe;
 
