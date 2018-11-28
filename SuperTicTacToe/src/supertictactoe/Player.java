@@ -30,6 +30,7 @@ public class Player implements ChangeBoard {
     }
     //checkcell
     //return boolean
+    @Override
     public boolean checkCell(int x, int y){
         getBoard(); //make sure our board data is accurate
 
@@ -37,7 +38,8 @@ public class Player implements ChangeBoard {
     }//end checkcell
     //placecell
     //return void
-    public void placeCell(int x, int y) {
+    @Override
+    public void placeCell(int x, int y, Board board) {
         if(checkCell(x, y)) {
             board.setBoard( x, y, 1);
         } 

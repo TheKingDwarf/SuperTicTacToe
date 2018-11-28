@@ -5,11 +5,15 @@
  */
 package supertictactoe;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -24,6 +28,7 @@ public class SuperTicTacToe extends Application {
     private Computer compterInstance;
     private int gameState;
     
+    public static final String TITLE_PREFIX = "Super T&L TicTacToe: ";
     
     
     
@@ -33,26 +38,79 @@ public class SuperTicTacToe extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
+        Button newGame = new Button();
+        newGame.setText("New Game");
+        newGame.setOnAction((ActionEvent event) -> {
+            goToDifficultySelect(primaryStage);
         });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        Button exit = new Button();
+        exit.setText("Exit");
+        exit.setOnAction((ActionEvent event) -> {
+            try {
+                stop();
+            } catch (Exception ex) {
+                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        GridPane root = new GridPane();
+        root.add(newGame, 0, 0);
+        root.add(exit, 0, 1);
+
         
         Scene scene = new Scene(root, 300, 250);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle(TITLE_PREFIX + "New Game");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    public void goToDifficultySelect(Stage primaryStage) {
+        Label difficulty = new Label("Difficulty");
+        
+        Button easy = new Button();
+        easy.setText("Easy");
+        easy.setOnAction((ActionEvent event) -> {
+            goToGame(primaryStage, 0);
+        });
+        
+        Button medium = new Button();
+        medium.setText("Medium");
+        medium.setOnAction((ActionEvent event) -> {
+            goToGame(primaryStage, 1);
+        });
+        
+        Button hard = new Button();
+        hard.setText("Hard");
+        hard.setOnAction((ActionEvent event) -> {
+            goToGame(primaryStage, 2);
+        });
+        
+        GridPane root = new GridPane();
+        root.add(difficulty, 0, 0);
+        root.add(easy, 0, 1);
+        root.add(medium, 0, 2);
+        root.add(hard, 0, 3);
+        
+        Scene scene = new Scene(root, 300, 250);
+        
+        primaryStage.setTitle(TITLE_PREFIX + "Difficulty Select");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public void goToGame(Stage primaryStage, int difficulty){
+        
+        //#TODO: game GUI
+        
+        GridPane root = new GridPane();
 
+        
+        Scene scene = new Scene(root, 300, 250);
+        
+        primaryStage.setTitle(TITLE_PREFIX + "In Game");
+        primaryStage.setScene(scene);
+        primaryStage.show(); 
+    }
     /**
      * @param args the command line arguments
      */

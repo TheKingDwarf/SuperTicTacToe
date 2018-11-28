@@ -15,5 +15,5 @@ public interface ChangeBoard {
     
     public boolean checkCell(int x, int y);
     
-    public void placeCell(int x, int y);
+    public void placeCell(int x, int y, Board board);
 }
