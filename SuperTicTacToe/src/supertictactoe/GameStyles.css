@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 .root{
-    -fx-background: #30346d;
+    -fx-background: #6dc2ca;
     -fx-margin: 5rem;
     -fx-font-weight: bold;
     -fx-font-size: 13pt;
@@ -35,4 +35,7 @@ and open the template in the editor.
     -fx-color: #d04648;
     -fx-line-height: 100px;
     -fx-text-align: center;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }

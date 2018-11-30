@@ -6,7 +6,7 @@
 make grid pane of cells, will go in the go to game
  */
 package supertictactoe;
-
+//import
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -20,11 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Cell;
 
-
-/**
- *
- * @author travis.dutton
- */
+//class SuperTicTacToe extends Application
 public class SuperTicTacToe extends Application {
     //veriables
     private Board boardInstance;
@@ -33,12 +29,7 @@ public class SuperTicTacToe extends Application {
     
     public static final String TITLE_PREFIX = "Super T&L TicTacToe: ";
     
-    
-    
-    
-    
-    
-    
+    //start runs the program
     @Override
     public void start(Stage primaryStage) {
         Button newGame = new Button();
@@ -46,7 +37,7 @@ public class SuperTicTacToe extends Application {
         newGame.setOnAction((ActionEvent event) -> {
             goToDifficultySelect(primaryStage);
         });
-        
+        //exit button to exit the game
         Button exit = new Button();
         exit.setText("Exit");
         exit.setOnAction((ActionEvent event) -> {
@@ -60,8 +51,8 @@ public class SuperTicTacToe extends Application {
         root.add(newGame, 0, 0);
         root.add(exit, 0, 1);
 
-        
         Scene scene = new Scene(root, 300, 250);
+        scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
         
         primaryStage.setTitle(TITLE_PREFIX + "New Game");
         primaryStage.setScene(scene);
@@ -87,15 +78,26 @@ public class SuperTicTacToe extends Application {
         hard.setOnAction((ActionEvent event) -> {
             goToGame(primaryStage, 2);
         });
+        //exit button to exit the game
+        Button exit = new Button();
+        exit.setText("Exit");
+        exit.setOnAction((ActionEvent event) -> {
+            try {
+                stop();
+            } catch (Exception ex) {
+                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         
         GridPane root = new GridPane();
         root.add(difficulty, 0, 0);
         root.add(easy, 0, 1);
         root.add(medium, 0, 2);
         root.add(hard, 0, 3);
+        root.add(exit, 0, 4);
         
         Scene scene = new Scene(root, 300, 250);
-        
+        scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
         primaryStage.setTitle(TITLE_PREFIX + "Difficulty Select");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -103,6 +105,16 @@ public class SuperTicTacToe extends Application {
     
     public void goToGame(Stage primaryStage, int difficulty){
         
+                //exit button to exit the game
+        Button exit = new Button();
+        exit.setText("Exit");
+        exit.setOnAction((ActionEvent event) -> {
+            try {
+                stop();
+            } catch (Exception ex) {
+                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         //#TODO: game GUI
         Cell cell1 = new Cell();
         Cell cell2 = new Cell();
@@ -115,20 +127,22 @@ public class SuperTicTacToe extends Application {
         Cell cell9 = new Cell();
         
         GridPane root = new GridPane();
-        root.add(cell1, 0, 0, 1, 1);
-        root.add(cell2, 1, 0, 1, 1);
-        root.add(cell3, 2, 0, 1, 1);
-        root.add(cell4, 0, 1, 1, 1);
-        root.add(cell5, 1, 1, 1, 1);
-        root.add(cell6, 2, 1, 1, 1);
-        root.add(cell7, 0, 2, 1, 1);
-        root.add(cell8, 1, 2, 1, 1);
-        root.add(cell9, 2, 2, 1, 1);
+        root.add(cell1, 0, 0);
+        root.add(cell2, 1, 0);
+        root.add(cell3, 2, 0);
+        root.add(cell4, 0, 1);
+        root.add(cell5, 1, 1);
+        root.add(cell6, 2, 1);
+        root.add(cell7, 0, 2);
+        root.add(cell8, 1, 2);
+        root.add(cell9, 2, 2);
+        root.add(exit, 10, 10);
           
         //3x3 gride to add cells to 
 
         
         Scene scene = new Scene(root, 300, 250);
+        scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
         
         primaryStage.setTitle(TITLE_PREFIX + "In Game");
         primaryStage.setScene(scene);
