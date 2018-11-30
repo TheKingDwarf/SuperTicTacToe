@@ -136,7 +136,7 @@ public class SuperTicTacToe extends Application {
         root.add(cell7, 0, 2);
         root.add(cell8, 1, 2);
         root.add(cell9, 2, 2);
-        root.add(exit, 10, 10);
+        root.add(exit, 10, 10);//exit the game
           
         //3x3 gride to add cells to 
 

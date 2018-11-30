@@ -36,6 +36,7 @@ and open the template in the editor.
     -fx-line-height: 100px;
     -fx-text-align: center;
 }
+
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
