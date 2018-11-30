@@ -1,0 +1,12 @@
+
+LOGAN
+********************************************************************************
+
+* Problem Encountered during development of Computer AI
+* Code should be finished, but have no way to test changes
+* Solution: Made temporary methods to test the game with, that output to command line
+
+* Problem Encountered: algorithm was not working, had trouble debugging
+* Solution: split the algorithm up into a bunch of different methods.
+
+TRAVIS

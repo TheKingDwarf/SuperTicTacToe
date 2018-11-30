@@ -54,70 +54,97 @@ public class Computer implements ChangeBoard {
     }
     
     public void PlaceCellSmart3Deep() {
-       
-        
+       int[] cell = minMax(board, 3, 2);
+       placeCell(cell[0], cell[1], board);        
     }
     
     public void PlaceCellSmart5Deep() {
+       int[] cell = minMax(board, 5, 2);
+       placeCell(cell[0], cell[1], board);   
     }
     
-    public int[] findCellSmart(Board board, int depth, int score, int token) {
-        ArrayList<int[]> possibleMoves = new ArrayList<>();
-        int[] foundCell;
-        int[][] b = board.getBoard(); //get the numerical data
+    public int[] minMax(Board board, int depth, int token) {
+        ArrayList<int[]> possibleMoves = findMoves(board);
         
-        //loop through array, listing all empty cells
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; i++) {
-                if (b[i][j] == 0) {
-                    int[] temp = {i, j};
-                    possibleMoves.add(temp);
+        //are we minimizing, or maximising the score ie are we checking the players moves or the computers
+        //if we are minimizing, this = -infinity; otherwise this is the same as infinity
+        int bestScore = (token == 2) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+        int currentScore;
+        int bestRow = -1;
+        int bestCol = -1;
+        int oppToken = (1 - (token - 1))+1;
+ 
+        //if there are no more moves to take along this tree, or we out of depth
+        if (possibleMoves.isEmpty() || depth == 0) {
+            bestScore = evaluateBoardState(board);  
+        } else {
+            //iterate through all the moves
+            for (int[] move: possibleMoves) {
+                //Board testBoard = new Board();
+                //copy board data to the test instance
+                //testBoard.cloneBoard(board.getBoard());
+                board.setBoard(move[0],move[1],token);
+                
+                if (token == 2) { //if we are computer
+                    currentScore = minMax(board, depth-1, oppToken)[2];
+                    
+                    if (currentScore > bestScore) {
+                        bestScore = currentScore;
+                        bestRow = move[0]; //this is the x coord
+                        bestCol = move[1]; // y coord
+                    }
+                } else {
+                   currentScore = minMax(board, depth-1, oppToken)[2];
+                    //if we are looking from the players perspective
+                    //we want the crappy moves, aka the ones where the pc wins
+                    if (currentScore < bestScore) { 
+                        bestScore = currentScore;
+                        bestRow = move[0]; //this is the x coord
+                        bestCol = move[1]; // y coord
+                    } 
                 }
-            }
-        }  
-        //loop through all of those
-        for (int i = 0; i < possibleMoves.size(); i++){
-            Board testBoard = new Board();//for each one make a new board
-            testBoard.cloneBoard(board.getBoard());//set the boards data equal to the current board
-            
-            //place a token into the 
-            int[] cell = possibleMoves.get(i); //get the cell from list of possibilities
-            placeCell(cell[0], cell[1], testBoard);//place a cell at those coords
-            
-            //Analyze Board
-            if (testBoard.checkWin(token)) {
-                score += 10000;
-                depth = 0;
+                board.setBoard(move[0],move[1],0);//undo the move we made
             }
             
-            if (testBoard.checkWin(1 + (2 - token))) { //check if enemy won
-                score -= 10000;
-                depth = 0;//we've reached a terminal board, no more recursions neccesary
-            }
-            
-            if (testBoard.checkDraw()) {
-                score -= 1000;
-            }
-            
-            if (testBoard.checkDouble(token)){
-                score += 10;
-            }
-            
-            if (testBoard.checkDouble(1 + (2 - token))) {
-                score -= 10;
-            }
-            
-            //RECURSION
-            if (depth > 0) {
-                foundCell = findCellSmart(testBoard, depth-1, score, 1 + (2 - token));
-            } else {
-                return new int[] {cell[0], cell[1], score};
-            }
+        }
+        /** debug code **/
+        int[][] b = board.getBoard();
+        for (int i = 0; i < 3; i++) {
+            System.out.println();
+            for (int j = 0; j < 3; j++)
+                System.out.print(b[i][j]);
         }
         
-        return foundCell;
+        return new int[] {bestRow, bestCol, bestScore};
+        
+        
+    }
+    
+    public int evaluateBoardState(Board board) {
+        int score = 0;
+        if (board.checkWin(2)) score = 100;
+        if (board.checkWin(1)) score = -100;
+        if (board.checkDouble(2)) score = 10;
+        if (board.checkDouble(1)) score = -10;
+        if (board.checkDraw()) score = 0;
+        return score;
+    }
+    
+    public ArrayList<int[]> findMoves(Board board) {
+        ArrayList<int[]> list = new ArrayList<>();
+        int[][] bData = board.getBoard();
+        
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++) {
+                if (bData[i][j] == 0){
+                    list.add(new int[] {i, j});
+                }
+            }
+        
+        return list;
     }
 
+        
     @Override
     public boolean checkCell(int x, int y){
         getBoard(); //make sure our board data is accurate
