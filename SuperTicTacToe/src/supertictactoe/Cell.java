@@ -5,7 +5,11 @@
  */
 package supertictactoe;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 
 /*
 TODO:
@@ -33,18 +37,42 @@ public class Cell extends Pane implements ChangeBoard{
     int x;
     int y;
     private int[][] boardData;
+    int state;
     Computer ai;
     
     Board board;
-
+    public static PseudoClass IS_AI_TOKEN = PseudoClass.getPseudoClass("empty");
+    public static PseudoClass IS_PLAYER_TOKEN = PseudoClass.getPseudoClass("isPlayerToken"); 
+    
+    BooleanProperty isAIToken;
+    BooleanProperty isPlayerToken;
+    
     public Cell(int x, int y, Board board, Computer ai) {
         this.x = x;
         this.y = y;
         this.board = board;  
         this.ai = ai;
         this.setOnMouseClicked(e -> mouseClick());
+        isAIToken = new SimpleBooleanProperty(false);
+        isAIToken.addListener(e -> pseudoClassStateChanged(IS_AI_TOKEN, isAIToken.get()));
+        isPlayerToken = new SimpleBooleanProperty(false);
+        isPlayerToken.addListener(e -> pseudoClassStateChanged(IS_PLAYER_TOKEN, isPlayerToken.get()));
     }
-    
+    //getters and setters for properties
+    public void setIsAIToken(boolean empty) {
+        this.isAIToken.set(empty);
+    }
+
+    public boolean isIsAIToken() {
+        return this.isAIToken.get();
+    }
+    public void setIsPlayerToken(boolean empty) {
+        this.isPlayerToken.set(empty);
+    }
+
+    public boolean isIsPlayerToken() {
+        return this.isPlayerToken.get();
+    }
      //checkcell
     //return boolean
     @Override
@@ -71,7 +99,21 @@ public class Cell extends Pane implements ChangeBoard{
     
     
     public void setImage(){
-           
+       switch (state) {
+           case 0: //nothing
+               setIsPlayerToken(false);
+               setIsAIToken(false);
+               break;
+           case 1: //player
+               setIsPlayerToken(true);
+               setIsAIToken(false);
+               Ellipse ellipse = new Ellipse();
+               break;
+           case 2:
+               setIsPlayerToken(false);
+               setIsAIToken(true);
+               break;//computer
+       }
     }
     //mouseclick 
     //returns 

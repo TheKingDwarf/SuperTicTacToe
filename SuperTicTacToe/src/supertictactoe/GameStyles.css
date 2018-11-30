@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 29, 2018, 7:12:54 PM
+    Author     : forma
+*/
+
+.root{
+    -fx-background: #30346d;
+    -fx-margin: 5rem;
+    -fx-font-weight: bold;
+    -fx-font-size: 13pt;
+    -fx-font-family: "Courier New";
+}
+
+.cell{
+    -fx-width: 30rem;
+    -fx-height: 30rem;
+}
+
+.cell:isPlayerToken{
+    -fx-content: "O";
+    -fx-font-size: 50px;
+    -fx-color: #597dce;
+    -fx-line-height: 100px;
+    -fx-text-align: center;
+}
+
+.cell:isAIToken{
+    -fx-content: "\274c";
+    -fx-font-size: 50px; 
+    -fx-color: #d04648;
+    -fx-line-height: 100px;
+    -fx-text-align: center;
+}
