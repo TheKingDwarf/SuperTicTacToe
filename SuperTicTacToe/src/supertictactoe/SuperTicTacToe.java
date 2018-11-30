@@ -2,6 +2,8 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
+make grid pane of cells, will go in the go to game
  */
 package supertictactoe;
 
@@ -16,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Cell;
+
 
 /**
  *
@@ -24,7 +28,6 @@ import javafx.stage.Stage;
 public class SuperTicTacToe extends Application {
     //veriables
     private Board boardInstance;
-    private Player playerInstance;
     private Computer compterInstance;
     private int gameState;
     
@@ -101,8 +104,28 @@ public class SuperTicTacToe extends Application {
     public void goToGame(Stage primaryStage, int difficulty){
         
         //#TODO: game GUI
+        Cell cell1 = new Cell();
+        Cell cell2 = new Cell();
+        Cell cell3 = new Cell();
+        Cell cell4 = new Cell();
+        Cell cell5 = new Cell();
+        Cell cell6 = new Cell();
+        Cell cell7 = new Cell();
+        Cell cell8 = new Cell();
+        Cell cell9 = new Cell();
         
         GridPane root = new GridPane();
+        root.add(cell1, 0, 0, 1, 1);
+        root.add(cell2, 1, 0, 1, 1);
+        root.add(cell3, 2, 0, 1, 1);
+        root.add(cell4, 0, 1, 1, 1);
+        root.add(cell5, 1, 1, 1, 1);
+        root.add(cell6, 2, 1, 1, 1);
+        root.add(cell7, 0, 2, 1, 1);
+        root.add(cell8, 1, 2, 1, 1);
+        root.add(cell9, 2, 2, 1, 1);
+          
+        //3x3 gride to add cells to 
 
         
         Scene scene = new Scene(root, 300, 250);
