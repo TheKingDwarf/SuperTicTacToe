@@ -6,29 +6,28 @@
  * Took me x hours
  */
 package supertictactoe;
-
+//import
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author travis.dutton
- */
+//class computer implements changeboard
 public class Computer implements ChangeBoard {
-    
+    //veriables
     final int difficulty;
     private boolean cellPlaced = false;
     
-    Board board = new Board();
-    Board testBoard = new Board();
+    Board board = new Board();//new board object - board
+    Board testBoard = new Board();//new board objext - testboard
     private int[][] boardData;
     
-    
+    //computer constructor
+    //to set board and difficulty 
     public Computer(Board board, int difficulty){
         this.board = board;
         this.difficulty = difficulty;
     }
-    
+    //turn, whos turn is it? 
+    //returns void
     public void turn(){
         switch (difficulty) { //do different things based of difficulty setting
             case 0:
@@ -42,8 +41,9 @@ public class Computer implements ChangeBoard {
                 break;
             
         }
-    }
-    
+    }//end turn
+    //place randomcell 
+    //returns void 
     public void PlaceRandomCell() {
         Random rand = new Random();//new random instance
         cellPlaced = false; 
@@ -52,13 +52,15 @@ public class Computer implements ChangeBoard {
             placeCell(rand.nextInt(2),rand.nextInt(2), board);
         }
     }
-    
+    //place cell for the computer's move 3 deep 
+    //returns void
     public void PlaceCellSmart3Deep() {
        int[] cell = minMax(board, 3, 2);
        if ((cell[0] >= 0) && (cell[1] >= 0))
        placeCell(cell[0], cell[1], board);        
     }
-    
+    //place cell for the computer's move 13 deep
+    //returns void
     public void PlaceCellSmart13Deep() {
        int[] cell = minMax(board, 9, 2);
        if ((cell[0] >= 0) && (cell[1] >= 0))       
