@@ -3,14 +3,12 @@
  * 11/20/2018
  * This program is the super Tic Tac Toe experience. 
  * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
- * Took me x hours
+ * Took me 4 hours
  */
 package supertictactoe;
 //import
 import java.util.ArrayList;
-import java.util.Random;
 
-//class computer implements changeboard
 public class Computer implements ChangeBoard {
     //veriables
     final int difficulty;
@@ -26,31 +24,27 @@ public class Computer implements ChangeBoard {
         this.board = board;
         this.difficulty = difficulty;
     }
-    //turn, whos turn is it? 
+    //turn, run our turn action based off difficulty. 
     //returns void
     public void turn(){
         switch (difficulty) { //do different things based of difficulty setting
             case 0:
-                PlaceRandomCell(); //really easy
+                PlaceCellSmart1Deep(); //really easy
                 break;
             case 1:
                 PlaceCellSmart3Deep();//hard
                 break;
             case 2:
-                PlaceCellSmart13Deep();//impossible
+                PlaceCellSmart9Deep();//impossible
                 break;
             
         }
     }//end turn
-    //place randomcell 
-    //returns void 
-    public void PlaceRandomCell() {
-        Random rand = new Random();//new random instance
-        cellPlaced = false; 
-        
-        while (cellPlaced = false) { //generate random positions until one works
-            placeCell(rand.nextInt(2),rand.nextInt(2), board);
-        }
+    //computer looks at its current move, if it has winning move it will take it
+   public void PlaceCellSmart1Deep() {
+       int[] cell = minMax(board, 3, 2);
+       if ((cell[0] >= 0) && (cell[1] >= 0))
+       placeCell(cell[0], cell[1], board);        
     }
     //place cell for the computer's move 3 deep 
     //returns void
@@ -59,14 +53,24 @@ public class Computer implements ChangeBoard {
        if ((cell[0] >= 0) && (cell[1] >= 0))
        placeCell(cell[0], cell[1], board);        
     }
-    //place cell for the computer's move 13 deep
+    //place cell for the computer's move 9 deep
+    //looks at every possible move, computer is looking at the end of the game when making its first move
     //returns void
-    public void PlaceCellSmart13Deep() {
+    public void PlaceCellSmart9Deep() {
        int[] cell = minMax(board, 9, 2);
        if ((cell[0] >= 0) && (cell[1] >= 0))       
        placeCell(cell[0], cell[1], board);   
     }
-    
+    /**
+     * minMax finds the best moves for the computer to make
+     * 
+     * @param board
+     * @param depth
+     * @param token
+     * @return int[] x, y and score
+     * 
+     * uses minMax algorithm
+     */
     public int[] minMax(Board board, int depth, int token) {
         ArrayList<int[]> possibleMoves = findMoves(board);
         
@@ -117,7 +121,11 @@ public class Computer implements ChangeBoard {
         
         
     }
-    
+    /**
+     * evaluates board state based off certain factors
+     * @param board
+     * @return score
+     */
     public int evaluateBoardState(Board board) {
         int score = 0;
         if (board.checkDouble(2)) score = 10;
@@ -127,7 +135,11 @@ public class Computer implements ChangeBoard {
         if (board.checkDraw()) score = 0;
         return score;
     }
-    
+    /**
+     * findMoves
+     * @param board
+     * @return listOfMoves
+     */
     public ArrayList<int[]> findMoves(Board board) {
         ArrayList<int[]> list = new ArrayList<>();
         int[][] bData = board.getBoard();

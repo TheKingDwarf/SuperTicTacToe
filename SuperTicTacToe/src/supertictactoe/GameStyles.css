@@ -9,17 +9,32 @@ and open the template in the editor.
 */
 
 .root{
-    -fx-background: #6dc2ca;
+    -fx-background: #d2aa99;
     -fx-margin: 5%;
     -fx-font-weight: bold;
     -fx-font-size: 13pt;
     -fx-font-family: "Courier New";
+    -fx-border-color: #d2aa99;
+    -fx-border-width: 10;
+    -fx-border-radius: 2;
 }
-
+.button{
+    -fx-background-color: #d04648;
+}
 .button:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-background-color:#d2aa99;
+    -fx-text-fill:#d04648;
+    -fx-scale-x: 1.07;
+    -fx-scale-y: 1.1;
+    -fx-border-color:#d04648;
+    -fx-border-radius: 4;
 }
 
-.game-cell{
-    -fx-border-color: #FFF;
+.game-cell:hover{
+    -fx-background-color: #597dce
 }
+
+.label{
+    -fx-font-size: 15pt;
+}
+

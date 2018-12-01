@@ -3,7 +3,7 @@
  * 11/20/2018
  * This program is the super Tic Tac Toe experience. 
  * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
- * Took me x hours
+ * Took us 2 hours
  */
 
 //package

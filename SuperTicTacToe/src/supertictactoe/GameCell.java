@@ -1,43 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Logan Forman and Travis Dutton-Leyda
+ * 11/20/2018
+ * This program is the super Tic Tac Toe experience. 
+ * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
+ * Took us 3 hours
  */
 package supertictactoe;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.css.PseudoClass;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 
-/*
-TODO:
-****************************************************************************
-Travis
-make cell class
-    has variables for its x and y position within the grid
-    has two methods, setImage and mouseClick
-    reference stackoverflow thread
 
-    error message popup window if player selects a cell that is already taken
-
-//TO DO: use the check cell method to show error message
-//selectable image to place token 
-//blank is 0, player token is 1, computer token is 2
-
-*****************************************************************************
-Logan
-program recursive computer ai
-make images
-*****************************************************************************
-
-*/
 public class GameCell extends StackPane implements ChangeBoard{
     int x;
     int y;
@@ -83,18 +56,27 @@ public class GameCell extends StackPane implements ChangeBoard{
         this.boardData = board.getBoard();
     }//end getboard
     
-    
+    /**
+     * set the look of this cell based off state
+     */
     public void setImage(){
         this.getChildren().clear();
        switch (state) {
            case 0: //nothing
-                 this.setStyle("-fx-background-color: #000");
+                 this.setStyle("-fx-background-color: #d2aa99; -fx-border-color: #d27d2c; -fx-border-radius: 5;");
+               
                  break;
            case 1: //player
-                 this.setStyle("-fx-background-color: #FFF");
-                 break;
+                 this.setStyle("-fx-background-color: #d04648;");
+                 Label X = new Label("X");
+                 X.setStyle("-fx-font-size: 72pt; -fx-font-family: 'Open-sans', sans-serif;");
+                 this.getChildren().add(X);   
+                 break;                              
            case 2:
-                 this.setStyle("-fx-background-color: #AAA");
+                 this.setStyle("-fx-background-color: #597dce;");
+                 Label o = new Label("O");
+                 o.setStyle("-fx-font-size: 72pt; -fx-font-family: 'Open-sans', sans-serif;");
+                 this.getChildren().add(o);
                  break;
        }
     }
@@ -104,10 +86,10 @@ public class GameCell extends StackPane implements ChangeBoard{
         if ((state == 0) && (!board.checkWin(1)) && (!board.checkWin(2))) {
             placeCell(x, y, board);
             ai.turn();
-            master.updateAll();
+            master.updateAll();//update every single cell
         }
     }
-   public void update(){
+   public void update(){ //update this cell
      getBoardData();
      state = boardData[x][y];
      setImage();

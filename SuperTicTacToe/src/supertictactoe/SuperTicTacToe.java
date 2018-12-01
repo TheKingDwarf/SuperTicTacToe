@@ -1,9 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
-
-make grid pane of cells, will go in the go to game
+ * Logan Forman and Travis Dutton-Leyda
+ * 11/20/2018
+ * This program is the super Tic Tac Toe experience. 
+ * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
+ * Took me 4 hours
  */
 package supertictactoe;
 //import
@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,12 +33,13 @@ public class SuperTicTacToe extends Application {
     public ArrayList<GameCell> cellList = new ArrayList<>();
     
     public static final String TITLE_PREFIX = "Super T&L TicTacToe: ";
-    private static Stage pStage;
+    private static Stage pStage; //holds the primary stage
     
-    private int playerWins;
+    private int playerWins; //hold match statistics
     private int computerWins;
     private int ties;
 
+    //getters and setters
     public int getTies() {
         return ties;
     }
@@ -73,6 +75,7 @@ public class SuperTicTacToe extends Application {
     //start runs the program
     @Override
     public void start(Stage primaryStage) {
+        //make two new buttons
         Button newGame = new Button();
         newGame.setText("New Game");
         newGame.setOnAction((ActionEvent event) -> {
@@ -81,24 +84,37 @@ public class SuperTicTacToe extends Application {
         //exit button to exit the game
         Button exit = new Button();
         exit.setText("Exit");
-        exit.setOnAction((ActionEvent event) -> {
-            try {
-                stop();
-            } catch (Exception ex) {
-                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        GridPane root = new GridPane();
-        root.add(newGame, 0, 0);
-        root.add(exit, 0, 1);
+        
+        BorderPane root = new BorderPane();
+        GridPane groot = new GridPane();
+        root.setCenter(groot);
+        newGame.setMaxWidth(Double.MAX_VALUE);
+        exit.setMaxWidth(Double.MAX_VALUE);
+        newGame.setMaxHeight(Double.MAX_VALUE);
+        exit.setMaxHeight(Double.MAX_VALUE);
+        groot.setVgap(50);
+        Label l = new Label(TITLE_PREFIX);
+        root.setTop(l);
+        root.setAlignment(l, Pos.CENTER);
+        groot.add(newGame, 1, 1);
+        groot.add(exit, 1, 2);
+        gridPaneSetEqualSizes(groot, 5, 3);
 
+        //create the scene and set the stage
         Scene scene = new Scene(root, 600, 600);
         scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
         setPrimaryStage(primaryStage);
         primaryStage.setTitle(TITLE_PREFIX + "New Game");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+        //we need to set the buttons event after stage is created
+        exit.setOnAction((ActionEvent event) -> exitButtonScript(primaryStage));
+
     }
+    /**
+     * goes to difficulty select screen
+     */
     public void goToDifficultySelect() {
         Label difficulty = new Label("Difficulty");
         
@@ -124,18 +140,30 @@ public class SuperTicTacToe extends Application {
         exit.setText("Exit");
         exit.setOnAction((ActionEvent event) -> {
             try {
-                stop();
+                start(getPrimaryStage());
             } catch (Exception ex) {
                 Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
-        GridPane root = new GridPane();
-        root.add(difficulty, 0, 0);
-        root.add(easy, 0, 1);
-        root.add(medium, 0, 2);
-        root.add(hard, 0, 3);
-        root.add(exit, 0, 4);
+        //set alignments and positioning;
+        BorderPane root = new BorderPane();
+        GridPane groot = new GridPane();
+        root.setCenter(groot);
+        easy.setMaxWidth(Double.MAX_VALUE);
+        medium.setMaxWidth(Double.MAX_VALUE);
+        hard.setMaxWidth(Double.MAX_VALUE);
+        exit.setMaxWidth(Double.MAX_VALUE);
+        easy.setMaxHeight(Double.MAX_VALUE);
+        medium.setMaxHeight(Double.MAX_VALUE);
+        hard.setMaxHeight(Double.MAX_VALUE);
+        exit.setMaxHeight(Double.MAX_VALUE);
+        groot.setVgap(50);
+        groot.add(difficulty, 1, 0);
+        groot.add(easy, 1, 1);
+        groot.add(medium, 1, 2);
+        groot.add(hard, 1, 3);
+        groot.add(exit, 1, 4);
+        gridPaneSetEqualSizes(groot, 5, 3);
         
         Scene scene = new Scene(root, 600, 600);
         scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
@@ -169,7 +197,7 @@ public class SuperTicTacToe extends Application {
         textGrid.add(new Label("Computer Wins: " + String.valueOf(getComputerWins())), 2, 0);
         textGrid.add(new Label("Ties: " + String.valueOf(getTies())), 1, 0);
        
-        
+        //set alignments
         GridPane grid = new GridPane();
         root.setCenter(grid);
         grid.setHgap(5);
@@ -220,18 +248,21 @@ public class SuperTicTacToe extends Application {
     
     public void winPopup(Stage primaryStage, boolean playerWon) {
        if (playerWon) {
-            setPlayerWins(getPlayerWins()+1);
+           //set all alignments
+            setPlayerWins(getPlayerWins()+1); //add to player wins
             BorderPane borderPane = new BorderPane();
             borderPane.setTop(new Label("You Won!"));
-
+            borderPane.setAlignment(borderPane.getTop(), Pos.CENTER);
             GridPane bGrid = new GridPane();
             borderPane.setCenter(bGrid);
 
-            Scene scene = new Scene(borderPane, 100, 100); 
+            Scene scene = new Scene(borderPane, 200, 200); 
             Stage stage = new Stage(); 
             stage.setScene(scene); 
             stage.setTitle("Player Won"); 
             stage.show(); 
+            scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
+
             
             Button exit = new Button();
             exit.setText("Exit");
@@ -247,19 +278,22 @@ public class SuperTicTacToe extends Application {
                 stage.close();
             });
             bGrid.add(exit, 0, 0); bGrid.add(retry, 1, 0);
-
+            gridPaneSetEqualSizes(bGrid, 1, 2);
             
        } else {
-            setComputerWins(getComputerWins()+1);
+           //set all alignments
+            setComputerWins(getComputerWins()+1); //add to the computers wins
             BorderPane borderPane = new BorderPane();
             borderPane.setTop(new Label("You Lost!"));
-
+            borderPane.setAlignment(borderPane.getTop(), Pos.CENTER);
             GridPane bGrid = new GridPane();
             borderPane.setCenter(bGrid);
            
-            Scene scene = new Scene(borderPane, 100, 100); 
+            Scene scene = new Scene(borderPane, 200, 200); 
+            scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
             Stage stage = new Stage(); 
             stage.setScene(scene); 
+            
             stage.setTitle("Player Lost"); 
             stage.show();
             
@@ -278,20 +312,22 @@ public class SuperTicTacToe extends Application {
 
             });
             bGrid.add(exit, 0, 0); bGrid.add(retry, 1, 0);
+            gridPaneSetEqualSizes(bGrid, 1, 2);
 
-             
        }
     }
     
     public void drawPopup(Stage primaryStage) {
-        setTies(getTies()+1);
+        setTies(getTies()+1); //add one to the amount of ties
+        //set alignments
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(new Label("It's a Tie!"));
-
+        borderPane.setAlignment(borderPane.getTop(), Pos.CENTER);
         GridPane bGrid = new GridPane();
         borderPane.setCenter(bGrid);
 
-        Scene scene = new Scene(borderPane, 100, 100); 
+        Scene scene = new Scene(borderPane, 200, 200); 
+        scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
         Stage stage = new Stage(); 
         stage.setScene(scene); 
         stage.setTitle("Tie"); 
@@ -312,23 +348,31 @@ public class SuperTicTacToe extends Application {
             
         });
         bGrid.add(exit, 0, 0); bGrid.add(retry, 1, 0);
-
-        
+        gridPaneSetEqualSizes(bGrid, 1, 2);
     }
-    
+    /**
+     * makes all elements of a gridPane the same size, completely filling up the available space
+     * @param p
+     * @param rows
+     * @param cols 
+     */
     public void gridPaneSetEqualSizes(GridPane p, int rows, int cols) {
         for (int i = 0 ; i < rows ; i++) {
             RowConstraints rc = new RowConstraints();
             rc.setPercentHeight(100.0 / rows);
-            rc.setValignment(VPos.BOTTOM);
+            rc.setValignment(VPos.CENTER);
             p.getRowConstraints().add(rc);
         }
         for (int i = 0 ; i < cols ; i++) {
             ColumnConstraints cc = new ColumnConstraints();
             cc.setHalignment(HPos.CENTER);
-            cc.setPercentWidth(100);
+            cc.setPercentWidth(100.0 / cols);
             p.getColumnConstraints().add(cc);
         }
+    }
+    
+    public void exitButtonScript(Stage stage) {
+        stage.close();
     }
     /**
      * @param args the command line arguments
