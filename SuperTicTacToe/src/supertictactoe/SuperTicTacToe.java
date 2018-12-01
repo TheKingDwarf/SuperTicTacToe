@@ -18,13 +18,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Cell;
 
 //class SuperTicTacToe extends Application
 public class SuperTicTacToe extends Application {
     //veriables
     private Board boardInstance;
-    private Computer compterInstance;
+    private Computer computerInstance;
     private int gameState;
     
     public static final String TITLE_PREFIX = "Super T&L TicTacToe: ";
@@ -78,23 +77,12 @@ public class SuperTicTacToe extends Application {
         hard.setOnAction((ActionEvent event) -> {
             goToGame(primaryStage, 2);
         });
-        //exit button to exit the game
-        Button exit = new Button();
-        exit.setText("Exit");
-        exit.setOnAction((ActionEvent event) -> {
-            try {
-                stop();
-            } catch (Exception ex) {
-                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
         
         GridPane root = new GridPane();
         root.add(difficulty, 0, 0);
         root.add(easy, 0, 1);
         root.add(medium, 0, 2);
         root.add(hard, 0, 3);
-        root.add(exit, 0, 4);
         
         Scene scene = new Scene(root, 300, 250);
         scene.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());//import CSS
@@ -104,27 +92,17 @@ public class SuperTicTacToe extends Application {
     }
     
     public void goToGame(Stage primaryStage, int difficulty){
-        
-                //exit button to exit the game
-        Button exit = new Button();
-        exit.setText("Exit");
-        exit.setOnAction((ActionEvent event) -> {
-            try {
-                stop();
-            } catch (Exception ex) {
-                Logger.getLogger(SuperTicTacToe.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
         //#TODO: game GUI
-        Cell cell1 = new Cell();
-        Cell cell2 = new Cell();
-        Cell cell3 = new Cell();
-        Cell cell4 = new Cell();
-        Cell cell5 = new Cell();
-        Cell cell6 = new Cell();
-        Cell cell7 = new Cell();
-        Cell cell8 = new Cell();
-        Cell cell9 = new Cell();
+        GameCell cell1 = new GameCell(0, 0, boardInstance, computerInstance);
+        GameCell cell2 = new GameCell(1, 0, boardInstance, computerInstance);
+        GameCell cell3 = new GameCell(2, 0, boardInstance, computerInstance);
+        GameCell cell4 = new GameCell(0, 1, boardInstance, computerInstance);
+        GameCell cell5 = new GameCell(1, 1, boardInstance, computerInstance);
+        GameCell cell6 = new GameCell(2, 1, boardInstance, computerInstance);
+        GameCell cell7 = new GameCell(0, 2, boardInstance, computerInstance);
+        GameCell cell8 = new GameCell(1, 2, boardInstance, computerInstance);
+        GameCell cell9 = new GameCell(2, 2, boardInstance, computerInstance);
+
         
         GridPane root = new GridPane();
         root.add(cell1, 0, 0);
@@ -136,7 +114,6 @@ public class SuperTicTacToe extends Application {
         root.add(cell7, 0, 2);
         root.add(cell8, 1, 2);
         root.add(cell9, 2, 2);
-        root.add(exit, 10, 10);//exit the game
           
         //3x3 gride to add cells to 
 

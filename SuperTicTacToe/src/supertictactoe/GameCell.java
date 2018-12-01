@@ -9,7 +9,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 /*
 TODO:
@@ -33,7 +36,7 @@ make images
 *****************************************************************************
 
 */
-public class Cell extends Pane implements ChangeBoard{
+public class GameCell extends Pane implements ChangeBoard{
     int x;
     int y;
     private int[][] boardData;
@@ -41,38 +44,17 @@ public class Cell extends Pane implements ChangeBoard{
     Computer ai;
     
     Board board;
-    public static PseudoClass IS_AI_TOKEN = PseudoClass.getPseudoClass("empty");
-    public static PseudoClass IS_PLAYER_TOKEN = PseudoClass.getPseudoClass("isPlayerToken"); 
     
-    BooleanProperty isAIToken;
-    BooleanProperty isPlayerToken;
-    
-    public Cell(int x, int y, Board board, Computer ai) {
+    public GameCell(int x, int y, Board board, Computer ai) {
         this.x = x;
         this.y = y;
         this.board = board;  
         this.ai = ai;
         this.setOnMouseClicked(e -> mouseClick());
-        isAIToken = new SimpleBooleanProperty(false);
-        isAIToken.addListener(e -> pseudoClassStateChanged(IS_AI_TOKEN, isAIToken.get()));
-        isPlayerToken = new SimpleBooleanProperty(false);
-        isPlayerToken.addListener(e -> pseudoClassStateChanged(IS_PLAYER_TOKEN, isPlayerToken.get()));
-    }
-    //getters and setters for properties
-    public void setIsAIToken(boolean empty) {
-        this.isAIToken.set(empty);
+        this.getStylesheets().add(getClass().getResource("GameStyles.css").toExternalForm());
+
     }
 
-    public boolean isIsAIToken() {
-        return this.isAIToken.get();
-    }
-    public void setIsPlayerToken(boolean empty) {
-        this.isPlayerToken.set(empty);
-    }
-
-    public boolean isIsPlayerToken() {
-        return this.isPlayerToken.get();
-    }
      //checkcell
     //return boolean
     @Override
@@ -99,19 +81,40 @@ public class Cell extends Pane implements ChangeBoard{
     
     
     public void setImage(){
+        this.getChildren().clear();
        switch (state) {
            case 0: //nothing
-               setIsPlayerToken(false);
-               setIsAIToken(false);
                break;
            case 1: //player
-               setIsPlayerToken(true);
-               setIsAIToken(false);
-               Ellipse ellipse = new Ellipse();
+               Line line1 = new Line(10, 10, 
+                this.getWidth() - 10, this.getHeight() - 10);
+              line1.endXProperty().bind(this.widthProperty().subtract(10));
+              line1.endYProperty().bind(this.heightProperty().subtract(10));
+              Line line2 = new Line(10, this.getHeight() - 10, 
+                this.getWidth() - 10, 10);
+              line2.startYProperty().bind(
+                this.heightProperty().subtract(10));
+              line2.endXProperty().bind(this.widthProperty().subtract(10));
+
+              // Add the lines to the pane
+              this.getChildren().addAll(line1, line2); 
                break;
            case 2:
-               setIsPlayerToken(false);
-               setIsAIToken(true);
+               Ellipse ellipse = new Ellipse(this.getWidth() / 2, 
+                this.getHeight() / 2, this.getWidth() / 2 - 10, 
+                this.getHeight() / 2 - 10);
+              ellipse.centerXProperty().bind(
+                this.widthProperty().divide(2));
+              ellipse.centerYProperty().bind(
+                  this.heightProperty().divide(2));
+              ellipse.radiusXProperty().bind(
+                  this.widthProperty().divide(2).subtract(10));        
+              ellipse.radiusYProperty().bind(
+                  this.heightProperty().divide(2).subtract(10));   
+              ellipse.setStroke(Color.BLACK);
+              ellipse.setFill(Color.WHITE);
+
+              getChildren().add(ellipse); // Add the ellipse to the pane
                break;//computer
        }
     }
