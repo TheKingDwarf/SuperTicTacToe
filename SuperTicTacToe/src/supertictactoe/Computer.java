@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class Computer implements ChangeBoard {
     
-    private int difficulty;
+    final int difficulty;
     private boolean cellPlaced = false;
     
     Board board = new Board();
@@ -38,7 +38,7 @@ public class Computer implements ChangeBoard {
                 PlaceCellSmart3Deep();//hard
                 break;
             case 2:
-                PlaceCellSmart5Deep();//impossible
+                PlaceCellSmart13Deep();//impossible
                 break;
             
         }
@@ -55,11 +55,13 @@ public class Computer implements ChangeBoard {
     
     public void PlaceCellSmart3Deep() {
        int[] cell = minMax(board, 3, 2);
+       if ((cell[0] >= 0) && (cell[1] >= 0))
        placeCell(cell[0], cell[1], board);        
     }
     
-    public void PlaceCellSmart5Deep() {
-       int[] cell = minMax(board, 5, 2);
+    public void PlaceCellSmart13Deep() {
+       int[] cell = minMax(board, 9, 2);
+       if ((cell[0] >= 0) && (cell[1] >= 0))       
        placeCell(cell[0], cell[1], board);   
     }
     
@@ -107,13 +109,7 @@ public class Computer implements ChangeBoard {
             }
             
         }
-        /** debug code **/
-        int[][] b = board.getBoard();
-        for (int i = 0; i < 3; i++) {
-            System.out.println();
-            for (int j = 0; j < 3; j++)
-                System.out.print(b[i][j]);
-        }
+
         
         return new int[] {bestRow, bestCol, bestScore};
         
@@ -122,10 +118,10 @@ public class Computer implements ChangeBoard {
     
     public int evaluateBoardState(Board board) {
         int score = 0;
-        if (board.checkWin(2)) score = 100;
-        if (board.checkWin(1)) score = -100;
         if (board.checkDouble(2)) score = 10;
         if (board.checkDouble(1)) score = -10;
+        if (board.checkWin(2)) score = 100;
+        if (board.checkWin(1)) score = -100;
         if (board.checkDraw()) score = 0;
         return score;
     }
@@ -133,6 +129,8 @@ public class Computer implements ChangeBoard {
     public ArrayList<int[]> findMoves(Board board) {
         ArrayList<int[]> list = new ArrayList<>();
         int[][] bData = board.getBoard();
+        
+        if (board.checkWin(1) || board.checkWin(2)) return list;//if someones run return empty list
         
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++) {

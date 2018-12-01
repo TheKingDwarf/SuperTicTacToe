@@ -9,7 +9,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 
 /*
 TODO:
@@ -33,51 +38,32 @@ make images
 *****************************************************************************
 
 */
-public class Cell extends Pane implements ChangeBoard{
+public class GameCell extends StackPane implements ChangeBoard{
     int x;
     int y;
-    private int[][] boardData;
+    int[][] boardData;
     int state;
     Computer ai;
     
     Board board;
-    public static PseudoClass IS_AI_TOKEN = PseudoClass.getPseudoClass("empty");
-    public static PseudoClass IS_PLAYER_TOKEN = PseudoClass.getPseudoClass("isPlayerToken"); 
     
-    BooleanProperty isAIToken;
-    BooleanProperty isPlayerToken;
+    SuperTicTacToe master;
     
-    public Cell(int x, int y, Board board, Computer ai) {
+    public GameCell( int y, int x, Board board, Computer ai, SuperTicTacToe master) {
+        super();
         this.x = x;
         this.y = y;
         this.board = board;  
         this.ai = ai;
         this.setOnMouseClicked(e -> mouseClick());
-        isAIToken = new SimpleBooleanProperty(false);
-        isAIToken.addListener(e -> pseudoClassStateChanged(IS_AI_TOKEN, isAIToken.get()));
-        isPlayerToken = new SimpleBooleanProperty(false);
-        isPlayerToken.addListener(e -> pseudoClassStateChanged(IS_PLAYER_TOKEN, isPlayerToken.get()));
-    }
-    //getters and setters for properties
-    public void setIsAIToken(boolean empty) {
-        this.isAIToken.set(empty);
-    }
+        this.master = master;
 
-    public boolean isIsAIToken() {
-        return this.isAIToken.get();
-    }
-    public void setIsPlayerToken(boolean empty) {
-        this.isPlayerToken.set(empty);
-    }
-
-    public boolean isIsPlayerToken() {
-        return this.isPlayerToken.get();
     }
      //checkcell
     //return boolean
     @Override
     public boolean checkCell(int x, int y){
-        getBoard(); //make sure our board data is accurate
+        getBoardData(); //make sure our board data is accurate
 
         return boardData[x][y] == 0; //returns 1 or 0 based off what this statement evaluates to
     }//end checkcell
@@ -93,33 +79,37 @@ public class Cell extends Pane implements ChangeBoard{
     
     //getboard 
     //return void
-    public void getBoard() {
+    public void getBoardData() {      
         this.boardData = board.getBoard();
     }//end getboard
     
     
     public void setImage(){
+        this.getChildren().clear();
        switch (state) {
            case 0: //nothing
-               setIsPlayerToken(false);
-               setIsAIToken(false);
-               break;
+                 this.setStyle("-fx-background-color: #000");
+                 break;
            case 1: //player
-               setIsPlayerToken(true);
-               setIsAIToken(false);
-               Ellipse ellipse = new Ellipse();
-               break;
+                 this.setStyle("-fx-background-color: #FFF");
+                 break;
            case 2:
-               setIsPlayerToken(false);
-               setIsAIToken(true);
-               break;//computer
+                 this.setStyle("-fx-background-color: #AAA");
+                 break;
        }
     }
     //mouseclick 
     //returns 
     public void mouseClick(){
-        placeCell(x, y, board);
-        ai.turn();
+        if ((state == 0) && (!board.checkWin(1)) && (!board.checkWin(2))) {
+            placeCell(x, y, board);
+            ai.turn();
+            master.updateAll();
+        }
     }
-   
+   public void update(){
+     getBoardData();
+     state = boardData[x][y];
+     setImage();
+   }
 }

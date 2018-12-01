@@ -9,6 +9,14 @@ LOGAN
 * Problem Encountered: algorithm was not working, had trouble debugging
 * Solution: split the algorithm up into a bunch of different methods.
 
+* Tons of weird errors revolving around the Cell class
+* Discovered that there is already a Cell class in javafx, and some of our code was referencing that
+* instead of our cell class
+* Solution: rename Cell to GameCell
+
+* Cells not drawing
+*
+
 TRAVIS
 
 * could not get cells in pane 3 to display 
