@@ -7,3 +7,5 @@ Instructions:
     Click New Game, Then select a difficulty.
 
     Click on unoccupied positions to place a token there.
+
+    Strategize your moves to beat the AI

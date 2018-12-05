@@ -19,8 +19,10 @@ LOGAN
 
 TRAVIS
 
-* could not get cells in pane 3 to display 
+* Could not get cells in pane 3 to display 
+* Solution, Logan discovered the Javafx default Cell class 
 
-easy mode doesn't seem to be working, the computer doesn't place its tokens.
+* easy mode doesn't seem to be working, the computer doesn't place its tokens.
+
 ********************************************************************************
 

@@ -4,11 +4,18 @@
  * This program is the super Tic Tac Toe experience. 
  * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
  * Took me 4 hours
+ *
+ *
+ *
+ * This class is the computer class that the player goes up against. It has 3 different
+ * difficulties that the user can select from. each increase in difficulty has a higher level of check against possible player moves
+ * and computer moves. 
+ *
  */
 package supertictactoe;
 //import
 import java.util.ArrayList;
-
+//computer class
 public class Computer implements ChangeBoard {
     //veriables
     final int difficulty;
@@ -41,6 +48,7 @@ public class Computer implements ChangeBoard {
         }
     }//end turn
     //computer looks at its current move, if it has winning move it will take it
+    //returns void
    public void PlaceCellSmart1Deep() {
        int[] cell = minMax(board, 3, 2);
        if ((cell[0] >= 0) && (cell[1] >= 0))

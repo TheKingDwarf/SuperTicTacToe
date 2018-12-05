@@ -4,6 +4,15 @@
  * This program is the super Tic Tac Toe experience. 
  * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
  * Took me 4 hours
+ *
+ *
+ * This class creates the Javafx GUI with 3 different scenes, one to start the game, one to select the difficulty, and one to play the game.
+ * The last scene has a popup when the game is over.
+ *
+ *
+ *
+ * 
+ *
  */
 package supertictactoe;
 //import
@@ -42,32 +51,25 @@ public class SuperTicTacToe extends Application {
     //getters and setters
     public int getTies() {
         return ties;
-    }
-
-    public void setTies(int ties) {
+    }public void setTies(int ties) {
         this.ties = ties;
-    }
-    
+    }    
     public int getPlayerWins() {
         return playerWins;
-    }
-
-    public void setPlayerWins(int playerWins) {
+    }public void setPlayerWins(int playerWins) {
         this.playerWins = playerWins;
     }
-
     public int getComputerWins() {
         return computerWins;
-    }
-
-    public void setComputerWins(int computerWins) {
+    }public void setComputerWins(int computerWins) {
         this.computerWins = computerWins;
     }
     
     public static Stage getPrimaryStage() {
         return pStage;
     }
-
+    //set stage 
+    //returns void
     private void setPrimaryStage(Stage pStage) {
         SuperTicTacToe.pStage = pStage;
     }
@@ -172,7 +174,8 @@ public class SuperTicTacToe extends Application {
         getPrimaryStage().setScene(scene);
         getPrimaryStage().show();
     }
-    
+    //the method to play the game
+    //returns void
     public void goToGame(int difficulty){
         boardInstance = new Board();
         computerInstance = new Computer(boardInstance, difficulty);
@@ -205,7 +208,7 @@ public class SuperTicTacToe extends Application {
         grid.setHgap(5);
         grid.setVgap(5);
         gridPaneSetEqualSizes(grid, 3, 3);
-        //puts the cells in the pane        
+        //puts the game cells in the pane        
         grid.add(cell1, 0, 0);
         grid.add(cell2, 1, 0);
         grid.add(cell3, 2, 0);
@@ -234,7 +237,7 @@ public class SuperTicTacToe extends Application {
         getPrimaryStage().setScene(scene);
         getPrimaryStage().show(); 
     }
-    //update all
+    //update all for the board and the cells
     //returns void
     public void updateAll() {
         for (GameCell i: cellList) {

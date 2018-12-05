@@ -4,6 +4,11 @@
  * This program is the super Tic Tac Toe experience. 
  * “I pledge that this program represents my own program code. I received help from no one in designing and debugging my program.” 
  * Took us 2 hours
+ * 
+ * This class is for the board. The board checks if there's a win for wither the player or the PC and if there's a draw.
+ * 
+ * 
+ * 
  */
 
 //package
@@ -17,7 +22,7 @@ public class Board {
     public void setBoard(int x, int y, int value){
         this.board[x][y] = value;       
     }
-    
+    //clonw the board
     public void cloneBoard(int[][] board){
         this.board = board;
     }
@@ -26,6 +31,7 @@ public class Board {
         return this.board;
         
     }
+    //check for a draw
     public boolean checkDraw() {
         
         for (int i = 0; i < 3; i++)
@@ -40,10 +46,12 @@ public class Board {
         return true;
     }
     //checks from horizon, diag, and vert win
+    //returns boolean
     public boolean checkWin( int t){
         return checkHorizontalWin(board, t) || checkVerticalWin(board, t) || checkDiagonalWin(board, t);        
     }//end check win
     //checks horizontal win
+    //returns boolean
     public boolean checkHorizontalWin(int[][] board, int t){
         for (int i = 0; i < board.length; i++) {
 				int count = 0;
@@ -59,6 +67,7 @@ public class Board {
     }//end check horizon
    
     //check win vertically
+    //returns boolean
     public boolean checkVerticalWin(int[][] board, int t){
         for (int i = 0; i < board.length; i++) {
 				int count = 0;
@@ -92,9 +101,9 @@ public class Board {
 			return false;
         
     }//end check diagonal
-    
+    //check double
+    //returnsboolean
     public boolean checkDouble( int t) {
-        
         return checkHorizontalDouble(board, t) || checkVerticalDouble(board, t) || checkDiagonalDouble(board, t);
     }
     //checks horizontal win
@@ -146,4 +155,4 @@ public class Board {
 			return false;
         
     }//end check diagonal
-}//end class
+}//end board class
